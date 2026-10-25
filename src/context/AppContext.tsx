@@ -27,6 +27,16 @@ interface AppContextType {
   activeRole: 'student' | 'instructor';
   switchRole: (role: 'student' | 'instructor') => void;
   updateUserProfile: (updates: Partial<UserAccount>) => void;
+  updateUserAvatar: (avatar: string) => void;
+  createNewUser: (data: {
+    name: string;
+    email: string;
+    role: 'student' | 'instructor';
+    avatar?: string;
+    weightKg?: number;
+    weeklyGoalMinutes?: number;
+  }) => void;
+  resetUserData: () => void;
   // Navigation
   activeTab: string;
   setActiveTab: (tab: string) => void;
@@ -182,6 +192,50 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const updateUserProfile = (updates: Partial<UserAccount>) => {
     setCurrentUser((prev) => ({ ...prev, ...updates }));
+  };
+
+  const updateUserAvatar = (avatar: string) => {
+    setCurrentUser((prev) => ({ ...prev, avatar }));
+  };
+
+  const createNewUser = (data: {
+    name: string;
+    email: string;
+    role: 'student' | 'instructor';
+    avatar?: string;
+    weightKg?: number;
+    weeklyGoalMinutes?: number;
+  }) => {
+    const newUser: UserAccount = {
+      id: `usr-${Date.now()}`,
+      role: data.role,
+      name: data.name,
+      email: data.email,
+      avatar: data.avatar || (data.role === 'instructor' ? INITIAL_INSTRUCTOR_USER.avatar : INITIAL_STUDENT_USER.avatar),
+      weightKg: data.weightKg || 65,
+      weeklyGoalMinutes: data.weeklyGoalMinutes || 120,
+      streakDays: 0,
+      favoritePoseIds: ['warrior-2', 'tree-pose'],
+      instructorData: data.role === 'instructor' ? {
+        hourlyRate: 50,
+        specialties: ['Vinyasa Flow', 'Biomechanics'],
+        yearsExperience: 2,
+        languages: ['Azərbaycan', 'English'],
+        availabilitySlots: ['10:00', '14:00', '16:00', '18:00'],
+        isEligible: false,
+      } : undefined,
+    };
+    setActiveRole(data.role);
+    setCurrentUser(newUser);
+  };
+
+  const resetUserData = () => {
+    setSessions([]);
+    setBookings([]);
+    setAssessments({});
+    localStorage.removeItem(STORAGE_KEYS.SESSIONS);
+    localStorage.removeItem(STORAGE_KEYS.BOOKINGS);
+    localStorage.removeItem(STORAGE_KEYS.ASSESSMENTS);
   };
 
   // Add Practice Session
@@ -384,6 +438,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         activeRole,
         switchRole,
         updateUserProfile,
+        updateUserAvatar,
+        createNewUser,
+        resetUserData,
         activeTab,
         setActiveTab,
         selectedPoseId,

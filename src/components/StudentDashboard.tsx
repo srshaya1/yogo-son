@@ -69,19 +69,19 @@ export const StudentDashboard: React.FC = () => {
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-violet-500/20 text-violet-300 border border-violet-500/30">
-                Welcome back, {currentUser.name}
+              <span className="px-3 py-1 rounded-full text-xs font-bold bg-violet-500/20 text-violet-300 border border-violet-500/40">
+                Xoş gəldiniz, {currentUser.name}
               </span>
-              <span className="flex items-center gap-1 text-xs font-bold text-amber-400 bg-amber-950/50 px-2.5 py-1 rounded-full border border-amber-800/40">
+              <span className="flex items-center gap-1 text-xs font-bold text-amber-400 bg-amber-950/60 px-3 py-1 rounded-full border border-amber-700/50">
                 <Flame className="w-3.5 h-3.5 fill-current" />
-                {currentUser.streakDays} Day Practice Streak
+                {currentUser.streakDays} Günlük Məşq Seriyası
               </span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-              Elevate Your Form with Computer Vision
+              Süni İntellekt və Kompüter Görmə ilə Yoqa Təlimi
             </h1>
-            <p className="text-slate-300 text-xs sm:text-sm max-w-xl leading-relaxed">
-              Real-time skeletal tracking detects your joint angles, calculates biomechanical precision, and guides your alignment with zero guesswork.
+            <p className="text-slate-300 text-xs sm:text-sm max-w-xl leading-relaxed font-medium">
+              Real-vaxtlı skelet izləmə bədən oynağı bucaqlarınızı təyin edir, biomexaniki dəqiqliyi hesablayır və bədən duruşunuzu mükəmməlləşdirir.
             </p>
           </div>
 
@@ -202,14 +202,20 @@ export const StudentDashboard: React.FC = () => {
 
           <div className="glass-panel rounded-2xl overflow-hidden border border-slate-800/80">
             {sessions.length === 0 ? (
-              <div className="p-8 text-center text-slate-400 space-y-3">
-                <Activity className="w-8 h-8 text-slate-600 mx-auto" />
-                <p className="text-sm">No practice sessions recorded yet.</p>
+              <div className="p-8 text-center text-slate-300 space-y-3">
+                <div className="w-12 h-12 rounded-2xl bg-slate-900 border border-slate-700 flex items-center justify-center mx-auto text-cyan-400">
+                  <Activity className="w-6 h-6" />
+                </div>
+                <h4 className="text-white font-bold text-sm">Hələ ki məşq qeydə alınmayıb</h4>
+                <p className="text-xs text-slate-400 max-w-sm mx-auto">
+                  Kameranızı aktivləşdirərək ilk canlı kompüter görmə yoqa məşqinizi başladın.
+                </p>
                 <button
                   onClick={() => setActiveTab('practice')}
-                  className="px-4 py-2 rounded-xl bg-violet-600 text-white font-bold text-xs"
+                  className="px-5 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-bold text-xs border border-violet-400 shadow-md transition-all inline-flex items-center gap-1.5"
                 >
-                  Start Your First Practice
+                  <Play className="w-3.5 h-3.5 fill-current" />
+                  <span>İlk Məşqə Başla</span>
                 </button>
               </div>
             ) : (
